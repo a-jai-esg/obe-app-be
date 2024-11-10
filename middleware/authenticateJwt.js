@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const authenticateJWT = (req, res, next) => {
+const authenticateJwt = (req, res, next) => {
   const token = req.cookies.token;
 
   if (token) {
@@ -20,4 +20,4 @@ const authenticateJWT = (req, res, next) => {
   }
 };
 
-export { authenticateJWT };
+export { authenticateJwt };

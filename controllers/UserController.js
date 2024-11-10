@@ -1,4 +1,4 @@
-import UserIDGenerator from "../misc/UserIdGenerator.js";
+import UserIdGenerator from "../misc/IdGenerators.js";
 import {
   registerUser,
   getUserByUsername,
@@ -8,6 +8,7 @@ import {
 import { getDepartmentById } from "../models/DepartmentModel.js";
 import bcrypt from "bcrypt";
 
+// get user by username controller
 const getUserByUsernameController = async (req, res) => {
   const { username } = req.body;
   try {
@@ -18,6 +19,7 @@ const getUserByUsernameController = async (req, res) => {
   }
 };
 
+// register user controller
 const registerUserController = async (req, res) => {
   const {
     first_name,
@@ -49,7 +51,7 @@ const registerUserController = async (req, res) => {
       return result.Department_Code;
     });
 
-    const user_id = await UserIDGenerator(
+    const user_id = await UserIdGenerator(
       first_name,
       last_name,
       departmentCode
@@ -74,6 +76,7 @@ const registerUserController = async (req, res) => {
   }
 };
 
+// update user controller
 const updateUserController = async (req, res) => {
   const {
     username,
@@ -108,6 +111,7 @@ const updateUserController = async (req, res) => {
   }
 };
 
+// login user controller
 const loginUserController = async (req, res) => {
   const { username, password } = req.body;
   console.log(req.body); // Log the request body
@@ -134,6 +138,7 @@ const loginUserController = async (req, res) => {
   }
 };
 
+// logout user controller
 const logoutUserController = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,

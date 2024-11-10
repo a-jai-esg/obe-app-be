@@ -6,14 +6,15 @@ import {
   updateUserController,
   registerUserController,
 } from "../controllers/UserController.js";
-import { authenticateJWT } from "../middleware/authenticateJWT.js";
+import { authenticateJwt } from "../middleware/authenticateJwt.js";
 
 const userRoutes = express.Router();
 
-userRoutes.post("/search", authenticateJWT, getUserByUsernameController);
+// account-related
+userRoutes.post("/search", authenticateJwt, getUserByUsernameController);
 userRoutes.post("/register", registerUserController);
-userRoutes.post("/update", authenticateJWT, updateUserController);
+userRoutes.post("/update", authenticateJwt, updateUserController);
 userRoutes.post("/login", loginUserController);
-userRoutes.post("/logout", authenticateJWT, logoutUserController);
+userRoutes.post("/logout", authenticateJwt, logoutUserController);
 
 export default userRoutes;
