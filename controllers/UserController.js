@@ -1,4 +1,4 @@
-import UserIdGenerator from "../misc/IdGenerators.js";
+import { UserIdGenerator } from "../misc/IdGenerators.js";
 import {
   registerUser,
   getUserByUsername,
@@ -111,7 +111,6 @@ const updateUserController = async (req, res) => {
   }
 };
 
-// login user controller
 const loginUserController = async (req, res) => {
   const { username, password } = req.body;
   console.log(req.body); // Log the request body
@@ -125,14 +124,12 @@ const loginUserController = async (req, res) => {
   try {
     const { token, user } = await loginUser(username, password);
 
-    // Set the JWT token as an HTTP-only cookie
-    res.cookie("token", token, {
-      httpOnly: true, // Ensures the cookie is only accessible by the web server
-      secure: process.env.NODE_ENV === "production", // Ensures the cookie is sent over HTTPS only in production
-      maxAge: 3600000, // 1 hour expiration
+    // Instead of setting the token in an HTTP-only cookie, send it in the response body
+    res.status(200).json({
+      message: "Login successful",
+      user,
+      token, // Return the token in the JSON response
     });
-
-    res.status(200).json({ message: "Login successful", user });
   } catch (error) {
     res.status(401).json({ message: error.message });
   }

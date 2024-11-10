@@ -23,9 +23,4 @@ const CilosIdGenerator = (program_name, database_index_value) => {
   return String(program_name).toUpperCase() + "-CILO-" + database_index_value;
 };
 
-export default {
-  UserIdGenerator,
-  PeoIdGenerator,
-  PoIdGenerator,
-  CilosIdGenerator,
-};
+export { UserIdGenerator, PeoIdGenerator, PoIdGenerator, CilosIdGenerator };
