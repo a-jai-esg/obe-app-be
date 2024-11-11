@@ -113,7 +113,6 @@ const updateUserController = async (req, res) => {
 
 const loginUserController = async (req, res) => {
   const { username, password } = req.body;
-  console.log(req.body); // Log the request body
 
   if (!username || !password) {
     return res
@@ -124,11 +123,18 @@ const loginUserController = async (req, res) => {
   try {
     const { token, user } = await loginUser(username, password);
 
-    // Instead of setting the token in an HTTP-only cookie, send it in the response body
+    // Set the token in an HTTP-only cookie
+    res.cookie("token", token, {
+      httpOnly: true, // Cookie can't be accessed by JavaScript
+      secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
+      sameSite: "strict", // Prevents CSRF attacks
+    });
+
+    // Return the token in the JSON response for local storage use
     res.status(200).json({
       message: "Login successful",
       user,
-      token, // Return the token in the JSON response
+      token,
     });
   } catch (error) {
     res.status(401).json({ message: error.message });
