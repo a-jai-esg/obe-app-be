@@ -2,12 +2,12 @@ import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
 // Check if the program exists
-const checkProgram = async (programDept, programTitle) => {
+const retrievePrograms = async (programDept) => {
   const [rows] = await pool.query(
-    `SELECT * FROM ${TableNames.PROGRAMS_MASTER_DATA_TABLE} WHERE Program_Dept = ? AND Program_Title = ?`,
-    [programDept, programTitle]
+    `SELECT * FROM ${TableNames.PROGRAMS_MASTER_DATA_TABLE} WHERE Program_Dept = ?`,
+    [programDept]
   );
-  return rows[0];
+  return rows;
 };
 
 // Create a new program
@@ -127,4 +127,4 @@ const deleteProgram = async (programCode) => {
   return { message: "Program deleted successfully." };
 };
 
-export { createProgram, checkProgram, updateProgram, deleteProgram };
+export { createProgram, retrievePrograms, updateProgram, deleteProgram };

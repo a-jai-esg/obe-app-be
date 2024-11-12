@@ -4,7 +4,7 @@ import { authenticateJwt } from "../middleware/authenticateJwt.js";
 // controllers
 import {
   createProgramController,
-  getProgramByDeptAndTitleController,
+  getProgramByDeptController,
   updateProgramController,
   deleteProgramController,
 } from "../controllers/ProgramsMasterDataController.js";
@@ -70,7 +70,7 @@ systemRoutes.post(
 systemRoutes.post(
   "/programs-master/read",
   authenticateJwt,
-  getProgramByDeptAndTitleController
+  getProgramByDeptController
 );
 
 systemRoutes.post(

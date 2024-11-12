@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 
 const getUserByUsername = async (username) => {
   const [rows] = await pool.query(
-    `SELECT * FROM ${TableNames.USER_TABLE} WHERE username = ?`,
+    `SELECT * FROM ${TableNames.USER_TABLE} ud LEFT JOIN Department_Data dd on ud.Department_ID = dd.Record_ID WHERE Username = ?`,
     [username]
   );
   return rows[0];
@@ -57,7 +57,16 @@ const loginUser = async (username, password) => {
     { expiresIn: "1h" }
   );
 
-  return { token, user: { User_ID: user.User_ID, Username: user.Username } };
+  return {
+    token,
+    user: {
+      User_ID: user.User_ID,
+      Username: user.Username,
+      Department_Code: user.Department_Code,
+      First_Name: user.First_Name,
+      Last_Name: user.Last_Name,
+    },
+  };
 };
 
 // update

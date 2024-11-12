@@ -1,15 +1,15 @@
 import {
   createProgram,
-  checkProgram,
+  retrievePrograms,
   updateProgram,
   deleteProgram,
 } from "../models/ProgramsMasterDataModel.js";
 
 // Get program by department and title
-const getProgramByDeptAndTitleController = async (req, res) => {
-  const { programDept, programTitle } = req.body;
+const getProgramByDeptController = async (req, res) => {
+  const { Department_Code } = req.body;
   try {
-    const data = await checkProgram(programDept, programTitle);
+    const data = await retrievePrograms(Department_Code);
     if (data) {
       res.status(200).json(data);
     } else {
@@ -103,7 +103,7 @@ const deleteProgramController = async (req, res) => {
 };
 
 export {
-  getProgramByDeptAndTitleController,
+  getProgramByDeptController,
   createProgramController,
   updateProgramController,
   deleteProgramController,
