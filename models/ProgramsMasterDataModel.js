@@ -17,9 +17,9 @@ const createProgram = async (program) => {
     program_title,
     program_dept,
     program_status,
-    program_custom_field_1,
-    program_custom_field_2,
-    program_custom_field_3,
+    program_custom_field1,
+    program_custom_field2,
+    program_custom_field3,
   } = program;
 
   // Check if the program already exists
@@ -40,9 +40,9 @@ const createProgram = async (program) => {
       program_title,
       program_dept,
       program_status,
-      program_custom_field_1,
-      program_custom_field_2,
-      program_custom_field_3,
+      program_custom_field1,
+      program_custom_field2,
+      program_custom_field3,
     ]
   );
   return { id: result.insertId, program };
@@ -54,9 +54,9 @@ const updateProgram = async (programCode, updatedFields) => {
     program_title,
     program_dept,
     program_status,
-    program_custom_field_1,
-    program_custom_field_2,
-    program_custom_field_3,
+    program_custom_field1,
+    program_custom_field2,
+    program_custom_field3,
   } = updatedFields;
 
   // Check if the program exists
@@ -88,17 +88,17 @@ const updateProgram = async (programCode, updatedFields) => {
 
   if (program_custom_field_1) {
     updates.push("Program_CustomField1 = ?");
-    values.push(program_custom_field_1);
+    values.push(program_custom_field1);
   }
 
   if (program_custom_field_2) {
     updates.push("Program_CustomField2 = ?");
-    values.push(program_custom_field_2);
+    values.push(program_custom_field2);
   }
 
   if (program_custom_field_3) {
     updates.push("Program_CustomField3 = ?");
-    values.push(program_custom_field_3);
+    values.push(program_custom_field3);
   }
 
   values.push(programCode);

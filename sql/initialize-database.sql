@@ -53,6 +53,18 @@ CREATE TABLE IF NOT EXISTS Programs_Master_Data (
     FOREIGN KEY (Program_Dept) REFERENCES Department_Data (Department_Code)
 );
 
+INSERT INTO Programs_Master_Data (Program_Code, Program_Title, Program_Dept, Program_Status, Program_CustomField1, Program_CustomField2, Program_CustomField3)
+VALUES ("BSIT", "Bachelor of Science in Information Technology", "CCS", true, null, null, null);
+
+INSERT INTO Programs_Master_Data (Program_Code, Program_Title, Program_Dept, Program_Status, Program_CustomField1, Program_CustomField2, Program_CustomField3)
+VALUES ("BSIS", "Bachelor of Science in Information Systems", "CCS", true, null, null, null);
+
+INSERT INTO Programs_Master_Data (Program_Code, Program_Title, Program_Dept, Program_Status, Program_CustomField1, Program_CustomField2, Program_CustomField3)
+VALUES ("BSCS", "Bachelor of Science in Computer Science", "CCS", true, null, null, null);
+
+INSERT INTO Programs_Master_Data (Program_Code, Program_Title, Program_Dept, Program_Status, Program_CustomField1, Program_CustomField2, Program_CustomField3)
+VALUES ("BSIT - SE", "Bachelor of Science in Information Technology - Software Engineering", "CCS", true, null, null, null);
+
 -- Curriculum Master Data table
 CREATE TABLE IF NOT EXISTS Curriculum_Master_Data (
     Record_ID INT PRIMARY KEY AUTO_INCREMENT,
@@ -67,6 +79,9 @@ CREATE TABLE IF NOT EXISTS Curriculum_Master_Data (
     INDEX (Curr_Rev_Code),
     FOREIGN KEY (Program_Code) REFERENCES Programs_Master_Data (Program_Code)
 );
+
+INSERT INTO Curriculum_Master_Data (Program_Code, Curr_Year, Curr_Rev_Code, Curr_Status, Curr_CustomField1, Curr_CustomField2, Curr_CustomField3)
+VALUES ("BSIT", 2024, "1.0", 1, null, null, null);
 
 -- Curriculum Courses File table
 CREATE TABLE IF NOT EXISTS Curriculum_Courses_File (

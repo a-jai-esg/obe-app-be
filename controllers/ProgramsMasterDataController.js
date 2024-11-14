@@ -27,9 +27,9 @@ const createProgramController = async (req, res) => {
     program_title,
     program_dept,
     program_status,
-    program_custom_field_1,
-    program_custom_field_2,
-    program_custom_field_3,
+    program_custom_field1,
+    program_custom_field2,
+    program_custom_field3,
   } = req.body;
 
   if (!program_code || !program_title || !program_dept) {
@@ -51,9 +51,9 @@ const createProgramController = async (req, res) => {
       program_title,
       program_dept,
       program_status,
-      program_custom_field_1,
-      program_custom_field_2,
-      program_custom_field_3,
+      program_custom_field1,
+      program_custom_field2,
+      program_custom_field3,
     });
 
     res.status(201).json({

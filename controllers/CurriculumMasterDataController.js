@@ -7,10 +7,10 @@ import {
 
 // Get curriculum by program code and curriculum revision code
 const getCurriculumController = async (req, res) => {
-  const { programCode, currRevCode } = req.params;
+  const { program_code } = req.body;
 
   try {
-    const data = await checkCurriculum(programCode, currRevCode);
+    const data = await checkCurriculum(program_code);
     if (data) {
       res.status(200).json(data);
     } else {
@@ -28,9 +28,9 @@ const createCurriculumController = async (req, res) => {
     curr_year,
     curr_rev_code,
     curr_status,
-    curr_custom_field_1,
-    curr_custom_field_2,
-    curr_custom_field_3,
+    curr_custom_field1,
+    curr_custom_field2,
+    curr_custom_field3,
   } = req.body;
 
   if (!program_code || !curr_rev_code) {
@@ -41,10 +41,7 @@ const createCurriculumController = async (req, res) => {
 
   try {
     // Check if the curriculum already exists
-    const existingCurriculum = await checkCurriculum(
-      program_code,
-      curr_rev_code
-    );
+    const existingCurriculum = await checkCurriculum(program_code);
     if (existingCurriculum) {
       return res.status(400).json({ message: "Curriculum already exists" });
     }
@@ -55,9 +52,9 @@ const createCurriculumController = async (req, res) => {
       curr_year,
       curr_rev_code,
       curr_status,
-      curr_custom_field_1,
-      curr_custom_field_2,
-      curr_custom_field_3,
+      curr_custom_field1,
+      curr_custom_field2,
+      curr_custom_field3,
     });
 
     res.status(201).json({
@@ -72,14 +69,29 @@ const createCurriculumController = async (req, res) => {
 
 // Update an existing curriculum
 const updateCurriculumController = async (req, res) => {
-  const { program_code, curr_rev_code } = req.params;
-  const updatedFields = req.body;
+  const {
+    program_code,
+    curr_year,
+    curr_rev_code,
+    curr_status,
+    curr_custom_field1,
+    curr_custom_field2,
+    curr_custom_field3,
+  } = req.body;
 
   if (!program_code || !curr_rev_code) {
     return res.status(400).json({
       message: "Program code and curriculum revision code are required",
     });
   }
+
+  const updatedFields = {
+    curr_year,
+    curr_status,
+    curr_custom_field1,
+    curr_custom_field2,
+    curr_custom_field3,
+  };
 
   try {
     const result = await updateCurriculum(

@@ -1,5 +1,5 @@
 import {
-  getCurriculumCoursesByRevAndCourseCode,
+  getCurriculumCourses,
   createCurriculumCourses,
   updateCurriculumCourses,
   deleteCurriculumCourses,
@@ -7,13 +7,10 @@ import {
 
 // Get curriculum course by revision code and course code
 const getCurriculumCoursesController = async (req, res) => {
-  const { currRevCode, currCourseCode } = req.params;
+  const { program_code } = req.body;
 
   try {
-    const data = await getCurriculumCoursesByRevAndCourseCode(
-      currRevCode,
-      currCourseCode
-    );
+    const data = await getCurriculumCourses(program_code);
     if (data) {
       res.status(200).json(data);
     } else {
@@ -76,19 +73,44 @@ const createCurriculumCoursesController = async (req, res) => {
 
 // Update curriculum course details
 const updateCurriculumCoursesController = async (req, res) => {
-  const { currRevCode, currCourseCode } = req.params;
-  const updatedFields = req.body;
+  const {
+    curr_rev_code,
+    curr_course_code,
+    curr_course_desc,
+    curr_year,
+    curr_sem,
+    curr_units,
+    curr_lec_hrs,
+    curr_lab_hrs,
+    curr_status,
+    curr_crs_customfield1,
+    curr_crs_customfield2,
+    curr_crs_customfield3,
+  } = req.body;
 
-  if (!currRevCode || !currCourseCode) {
+  if (!curr_rev_code || !curr_course_code) {
     return res.status(400).json({
       message: "Curriculum revision code and course code are required",
     });
   }
 
+  const updatedFields = {
+    curr_course_desc,
+    curr_year,
+    curr_sem,
+    curr_units,
+    curr_lec_hrs,
+    curr_lab_hrs,
+    curr_status,
+    curr_crs_customfield1,
+    curr_crs_customfield2,
+    curr_crs_customfield3,
+  };
+
   try {
     const result = await updateCurriculumCourses(
-      currRevCode,
-      currCourseCode,
+      curr_rev_code,
+      curr_course_code,
       updatedFields
     );
     if (result) {
