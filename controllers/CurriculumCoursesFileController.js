@@ -7,10 +7,10 @@ import {
 
 // Get curriculum course by revision code and course code
 const getCurriculumCoursesController = async (req, res) => {
-  const { program_code } = req.body;
+  const { program_code, dept_code } = req.body;
 
   try {
-    const data = await getCurriculumCourses(program_code);
+    const data = await getCurriculumCourses(program_code, dept_code);
     if (data) {
       res.status(200).json(data);
     } else {

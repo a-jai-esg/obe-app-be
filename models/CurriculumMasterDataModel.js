@@ -7,7 +7,7 @@ const checkCurriculum = async (programCode) => {
     `SELECT * FROM ${TableNames.CURR_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
     [programCode]
   );
-  return rows[0];
+  return rows;
 };
 
 // Create a new curriculum
@@ -21,8 +21,6 @@ const createCurriculum = async (curriculum) => {
     curr_custom_field2,
     curr_custom_field3,
   } = curriculum;
-
-  console.log(curriculum);
 
   // Check if the curriculum already exists
   const existingCurriculum = await checkCurriculum(program_code);

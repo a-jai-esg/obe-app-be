@@ -1,20 +1,29 @@
 import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
-// Get curriculum courses by revision and course code
-const getCurriculumCourses = async (program_code) => {
-  const [rows] = await pool.query(
-    `SELECT 
-        ccf.*, 
-        cmd.Curr_Rev_Code, 
-        cmd.Program_Code, 
-        cmd.Curr_Year AS Effective_Year 
-     FROM Curriculum_Courses_File ccf 
-     LEFT JOIN Curriculum_Master_Data cmd 
-     ON ccf.Curr_Rev_Code = cmd.Curr_Rev_Code 
-     WHERE cmd.Program_Code = ?`,
-    [program_code]
-  );
+const getCurriculumCourses = async (program_code, dept_code) => {
+  let query = `
+    SELECT 
+      ccf.*, 
+      cmd.Curr_Rev_Code, 
+      cmd.Program_Code,
+      cmd.Curr_Year AS Effective_Year 
+    FROM ${TableNames.CURR_COURSES_FILE_TABLE} ccf 
+    LEFT JOIN ${TableNames.CURR_MASTER_DATA_TABLE} cmd 
+    ON ccf.Curr_Rev_Code = cmd.Curr_Rev_Code 
+    LEFT JOIN ${TableNames.PROGRAMS_MASTER_DATA_TABLE} pmd 
+    ON cmd.Program_Code = pmd.Program_Code
+    WHERE pmd.Program_Dept = ?
+  `;
+
+  const params = [dept_code];
+
+  if (program_code !== null) {
+    query += ` AND cmd.Program_Code LIKE ?`;
+    params.push(`%${program_code}%`);
+  }
+
+  const [rows] = await pool.query(query, params);
   return rows;
 };
 
