@@ -14,13 +14,26 @@ const checkProgramObjectives = async (programCode, poSeqNumber) => {
 const createProgramObjective = async (programObjectives) => {
   const {
     program_code,
-    po_seq_number,
     po_desc,
     po_status,
     po_custom_field1,
     po_custom_field2,
     po_custom_field3,
   } = programObjectives;
+
+  // Query to find the number of existing POs for the given program_code
+  const [rows] = await pool.query(
+    `SELECT COUNT(*) as po_count FROM ${TableNames.PO_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
+    [program_code]
+  );
+
+  const poCount = rows[0].po_count;
+
+  // Generate PO Sequence Number in the desired format: BSIT-PEO-01
+  const po_seq_number = `${program_code}-PO-${String(poCount + 1).padStart(
+    2,
+    "0"
+  )}`;
 
   // Check if the program objective already exists
   const existingProgramObjective = await checkProgramObjectives(

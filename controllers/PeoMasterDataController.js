@@ -30,7 +30,6 @@ const getProgramEducationalObjectiveController = async (req, res) => {
 const createProgramEducationalObjectiveController = async (req, res) => {
   const {
     program_code,
-    peo_seq_number,
     peo_desc,
     peo_status,
     peo_custom_field1,
@@ -38,28 +37,16 @@ const createProgramEducationalObjectiveController = async (req, res) => {
     peo_custom_field3,
   } = req.body;
 
-  if (!program_code || !peo_seq_number) {
+  if (!program_code) {
     return res.status(400).json({
-      message: "Program code and PEO sequence number are required",
+      message: "Program code is required",
     });
   }
 
   try {
-    // Check if the program educational objective already exists
-    const existingPeo = await checkProgramEducationalObjectives(
-      program_code,
-      peo_seq_number
-    );
-    if (existingPeo) {
-      return res
-        .status(400)
-        .json({ message: "Program educational objective already exists" });
-    }
-
     // Save the program educational objective to the database
     const newPeo = await createProgramEducationalObjective({
       program_code,
-      peo_seq_number,
       peo_desc,
       peo_status,
       peo_custom_field1,

@@ -16,13 +16,26 @@ const createProgramEducationalObjective = async (
 ) => {
   const {
     program_code,
-    peo_seq_number,
     peo_desc,
     peo_status,
     peo_custom_field1,
     peo_custom_field2,
     peo_custom_field3,
   } = programEducationalObjectives;
+
+  // Query to find the number of existing POs for the given program_code
+  const [rows] = await pool.query(
+    `SELECT COUNT(*) as peo_count FROM ${TableNames.PEO_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
+    [program_code]
+  );
+
+  const peoCount = rows[0].peo_count;
+
+  // Generate PO Sequence Number in the desired format: BSIT-PEO-01
+  const peo_seq_number = `${program_code}-PEO-${String(peoCount + 1).padStart(
+    2,
+    "0"
+  )}`;
 
   // Check if the program objective already exists
   const existingProgramEducationalObjective =

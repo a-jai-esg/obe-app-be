@@ -24,7 +24,6 @@ const getProgramObjectiveController = async (req, res) => {
 const createProgramObjectiveController = async (req, res) => {
   const {
     program_code,
-    po_seq_number,
     po_desc,
     po_status,
     po_custom_field1,
@@ -32,28 +31,16 @@ const createProgramObjectiveController = async (req, res) => {
     po_custom_field3,
   } = req.body;
 
-  if (!program_code || !po_seq_number) {
+  if (!program_code) {
     return res
       .status(400)
       .json({ message: "Program code and sequence number are required" });
   }
 
   try {
-    // Check if the program objective already exists
-    const existingProgramObjective = await checkProgramObjectives(
-      program_code,
-      po_seq_number
-    );
-    if (existingProgramObjective) {
-      return res
-        .status(400)
-        .json({ message: "Program objective already exists" });
-    }
-
     // Save the program objective to the database
     const newProgramObjective = await createProgramObjective({
       program_code,
-      po_seq_number,
       po_desc,
       po_status,
       po_custom_field1,
