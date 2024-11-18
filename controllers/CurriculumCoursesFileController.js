@@ -127,16 +127,16 @@ const updateCurriculumCoursesController = async (req, res) => {
 
 // Delete a curriculum course
 const deleteCurriculumCoursesController = async (req, res) => {
-  const { currRevCode, currCourseCode } = req.params;
+  const { curr_rev_code, curr_course_code } = req.params;
 
-  if (!currRevCode || !currCourseCode) {
+  if (!curr_rev_code || !curr_course_code) {
     return res.status(400).json({
       message: "Curriculum revision code and course code are required",
     });
   }
 
   try {
-    await deleteCurriculumCourses(currRevCode, currCourseCode);
+    await deleteCurriculumCourses(curr_rev_code, curr_course_code);
     res.status(200).json({ message: "Curriculum course deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });

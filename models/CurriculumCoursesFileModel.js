@@ -28,7 +28,7 @@ const getCurriculumCourses = async (program_code, dept_code) => {
 };
 
 // Create curriculum courses
-const createCurriculumCourses = async (curriculumCourses) => {
+const createCurriculumCourses = async (curriculum_courses) => {
   const {
     curr_rev_code,
     curr_course_code,
@@ -42,7 +42,7 @@ const createCurriculumCourses = async (curriculumCourses) => {
     curr_crs_custom_field1,
     curr_crs_custom_field2,
     curr_crs_custom_field3,
-  } = curriculumCourses;
+  } = curriculum_courses;
 
   const [result] = await pool.query(
     `INSERT INTO ${TableNames.CURR_COURSES_FILE_TABLE} 
@@ -65,7 +65,7 @@ const createCurriculumCourses = async (curriculumCourses) => {
       curr_crs_custom_field3,
     ]
   );
-  return { id: result.insertId, curriculumCourses };
+  return { id: result.insertId, curriculum_courses };
 };
 
 // Update curriculum courses

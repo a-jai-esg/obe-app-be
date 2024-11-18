@@ -2,10 +2,10 @@ import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
 // Check if the curriculum exists
-const checkCurriculum = async (programCode) => {
+const checkCurriculum = async (program_code) => {
   const [rows] = await pool.query(
     `SELECT * FROM ${TableNames.CURR_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
-    [programCode]
+    [program_code]
   );
   return rows;
 };
@@ -52,7 +52,7 @@ const createCurriculum = async (curriculum) => {
 };
 
 // Update curriculum details
-const updateCurriculum = async (programCode, currRevCode, updatedFields) => {
+const updateCurriculum = async (program_code, curr_rev_code, updatedFields) => {
   const {
     curr_year,
     curr_status,
@@ -62,7 +62,7 @@ const updateCurriculum = async (programCode, currRevCode, updatedFields) => {
   } = updatedFields;
 
   // Check if the curriculum exists
-  const existingCurriculum = await checkCurriculum(programCode, currRevCode);
+  const existingCurriculum = await checkCurriculum(program_code, curr_rev_code);
   if (!existingCurriculum) {
     throw new Error("Curriculum not found");
   }
@@ -95,7 +95,7 @@ const updateCurriculum = async (programCode, currRevCode, updatedFields) => {
     values.push(curr_custom_field3);
   }
 
-  values.push(programCode, currRevCode);
+  values.push(program_code, curr_rev_code);
 
   const [result] = await pool.query(
     `UPDATE ${TableNames.CURR_MASTER_DATA_TABLE} SET ${updates.join(", ")} 

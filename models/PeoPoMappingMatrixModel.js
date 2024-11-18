@@ -20,9 +20,9 @@ const createPeoPoMapping = async (peoPoMapping) => {
     po_seq_number,
     peo_po_activation_code,
     peo_po_status,
-    peo_po_custom_field_1,
-    peo_po_custom_field_2,
-    peo_po_custom_field_3,
+    peo_po_custom_field1,
+    peo_po_custom_field2,
+    peo_po_custom_field3,
   } = peoPoMapping;
 
   // Check if the PEO-PO mapping already exists
@@ -50,9 +50,9 @@ const createPeoPoMapping = async (peoPoMapping) => {
       po_seq_number,
       peo_po_activation_code,
       peo_po_status,
-      peo_po_custom_field_1,
-      peo_po_custom_field_2,
-      peo_po_custom_field_3,
+      peo_po_custom_field1,
+      peo_po_custom_field2,
+      peo_po_custom_field3,
     ]
   );
 
@@ -61,24 +61,24 @@ const createPeoPoMapping = async (peoPoMapping) => {
 
 // Update PEO-PO mapping details
 const updatePeoPoMapping = async (
-  programCode,
-  peoSeqNumber,
-  poSeqNumber,
+  program_code,
+  peo_seq_number,
+  po_seq_number,
   updatedFields
 ) => {
   const {
     peo_po_activation_code,
     peo_po_status,
-    peo_po_custom_field_1,
-    peo_po_custom_field_2,
-    peo_po_custom_field_3,
+    peo_po_custom_field1,
+    peo_po_custom_field2,
+    peo_po_custom_field3,
   } = updatedFields;
 
   // Check if the PEO-PO mapping exists
   const existingPeoPoMapping = await checkPeoPoMapping(
-    programCode,
-    peoSeqNumber,
-    poSeqNumber
+    program_code,
+    peo_seq_number,
+    po_seq_number
   );
 
   if (!existingPeoPoMapping) {
@@ -100,20 +100,20 @@ const updatePeoPoMapping = async (
 
   if (peo_po_custom_field_1) {
     updates.push("PEO_PO_CustomField1 = ?");
-    values.push(peo_po_custom_field_1);
+    values.push(peo_po_custom_field1);
   }
 
   if (peo_po_custom_field_2) {
     updates.push("PEO_PO_CustomField2 = ?");
-    values.push(peo_po_custom_field_2);
+    values.push(peo_po_custom_field2);
   }
 
   if (peo_po_custom_field_3) {
     updates.push("PEO_PO_CustomField3 = ?");
-    values.push(peo_po_custom_field_3);
+    values.push(peo_po_custom_field3);
   }
 
-  values.push(programCode, peoSeqNumber, poSeqNumber);
+  values.push(program_code, peo_seq_number, po_seq_number);
 
   const [result] = await pool.query(
     `UPDATE ${TableNames.PEO_PO_MAPPING_MATRIX_TABLE} SET ${updates.join(", ")} 
@@ -125,11 +125,15 @@ const updatePeoPoMapping = async (
 };
 
 // Delete PEO-PO mapping
-const deletePeoPoMapping = async (programCode, peoSeqNumber, poSeqNumber) => {
+const deletePeoPoMapping = async (
+  program_code,
+  peo_seq_number,
+  po_seq_number
+) => {
   const [result] = await pool.query(
     `DELETE FROM ${TableNames.PEO_PO_MAPPING_MATRIX_TABLE} 
     WHERE Program_Code = ? AND PEO_SeqNumber = ? AND PO_SeqNumber = ?`,
-    [programCode, peoSeqNumber, poSeqNumber]
+    [program_code, peo_seq_number, po_seq_number]
   );
 
   if (result.affectedRows === 0) {

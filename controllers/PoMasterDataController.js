@@ -7,9 +7,9 @@ import {
 
 // Get program objective by program code and sequence number
 const getProgramObjectiveController = async (req, res) => {
-  const { programCode, poSeqNumber } = req.body;
+  const { program_code, po_seq_number } = req.body;
   try {
-    const data = await checkProgramObjectives(programCode, poSeqNumber);
+    const data = await checkProgramObjectives(program_code, po_seq_number);
     if (data) {
       res.status(200).json(data);
     } else {
@@ -27,9 +27,9 @@ const createProgramObjectiveController = async (req, res) => {
     po_seq_number,
     po_desc,
     po_status,
-    po_custom_field_1,
-    po_custom_field_2,
-    po_custom_field_3,
+    po_custom_field1,
+    po_custom_field2,
+    po_custom_field3,
   } = req.body;
 
   if (!program_code || !po_seq_number) {
@@ -56,9 +56,9 @@ const createProgramObjectiveController = async (req, res) => {
       po_seq_number,
       po_desc,
       po_status,
-      po_custom_field_1,
-      po_custom_field_2,
-      po_custom_field_3,
+      po_custom_field1,
+      po_custom_field2,
+      po_custom_field3,
     });
 
     res.status(201).json({

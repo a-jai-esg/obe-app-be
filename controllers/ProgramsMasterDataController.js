@@ -7,9 +7,9 @@ import {
 
 // Get program by department and title
 const getProgramByDeptController = async (req, res) => {
-  const { Department_Code } = req.body;
+  const { dept_code } = req.body;
   try {
-    const data = await retrievePrograms(Department_Code);
+    const data = await retrievePrograms(dept_code);
     if (data) {
       res.status(200).json(data);
     } else {

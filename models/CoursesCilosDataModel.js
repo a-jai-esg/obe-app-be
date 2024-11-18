@@ -2,10 +2,13 @@ import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
 // Get courses CILOs by CILO code and course code
-const getCoursesCilosByCiloAndCourseCode = async (ciloCode, currCourseCode) => {
+const getCoursesCilosByCiloAndCourseCode = async (
+  cilo_code,
+  curr_course_code
+) => {
   const [rows] = await pool.query(
     `SELECT * FROM ${TableNames.COURSES_CILOS_DATA_TABLE} WHERE CILO_Code = ? AND Curr_Course_Code = ?`,
-    [ciloCode, currCourseCode]
+    [cilo_code, curr_course_code]
   );
   return rows[0];
 };
@@ -41,7 +44,11 @@ const createCoursesCilos = async (coursesCilos) => {
 };
 
 // Update courses CILOs
-const updateCoursesCilos = async (ciloCode, currCourseCode, updatedFields) => {
+const updateCoursesCilos = async (
+  cilo_code,
+  curr_course_code,
+  updatedFields
+) => {
   const {
     cilo_desc,
     cilo_status,
@@ -78,7 +85,7 @@ const updateCoursesCilos = async (ciloCode, currCourseCode, updatedFields) => {
     values.push(cilo_customfield3);
   }
 
-  values.push(ciloCode, currCourseCode);
+  values.push(cilo_code, curr_course_code);
 
   const [result] = await pool.query(
     `UPDATE ${TableNames.COURSES_CILOS_DATA_TABLE} SET ${updates.join(", ")} 
@@ -90,10 +97,10 @@ const updateCoursesCilos = async (ciloCode, currCourseCode, updatedFields) => {
 };
 
 // Delete courses CILOs
-const deleteCoursesCilos = async (ciloCode, currCourseCode) => {
+const deleteCoursesCilos = async (cilo_code, curr_course_code) => {
   const [result] = await pool.query(
     `DELETE FROM ${TableNames.COURSES_CILOS_DATA_TABLE} WHERE CILO_Code = ? AND Curr_Course_Code = ?`,
-    [ciloCode, currCourseCode]
+    [cilo_code, curr_course_code]
   );
 
   if (result.affectedRows === 0) {

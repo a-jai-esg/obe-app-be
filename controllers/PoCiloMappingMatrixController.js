@@ -7,12 +7,12 @@ import {
 
 // Get PO-CILO mapping by program code, CILO sequence number, and PO sequence number
 const getPoCiloMappingController = async (req, res) => {
-  const { programCode, ciloSeqNumber, poSeqNumber } = req.body;
+  const { program_code, cilo_seq_number, po_seq_number } = req.body;
   try {
     const data = await checkPoCiloMapping(
-      programCode,
-      ciloSeqNumber,
-      poSeqNumber
+      program_code,
+      cilo_seq_number,
+      po_seq_number
     );
     if (data) {
       res.status(200).json(data);
@@ -33,9 +33,9 @@ const createPoCiloMappingController = async (req, res) => {
     po_seq_number,
     po_cilo_activation_code,
     po_cilo_status,
-    po_cilo_custom_field_1,
-    po_cilo_custom_field_2,
-    po_cilo_custom_field_3,
+    po_cilo_custom_field1,
+    po_cilo_custom_field2,
+    po_cilo_custom_field3,
   } = req.body;
 
   if (!program_code || !cilo_seq_number || !po_seq_number) {
@@ -66,9 +66,9 @@ const createPoCiloMappingController = async (req, res) => {
       po_seq_number,
       po_cilo_activation_code,
       po_cilo_status,
-      po_cilo_custom_field_1,
-      po_cilo_custom_field_2,
-      po_cilo_custom_field_3,
+      po_cilo_custom_field1,
+      po_cilo_custom_field2,
+      po_cilo_custom_field3,
     });
 
     res.status(201).json({

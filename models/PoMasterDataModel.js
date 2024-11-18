@@ -17,9 +17,9 @@ const createProgramObjective = async (programObjectives) => {
     po_seq_number,
     po_desc,
     po_status,
-    po_custom_field_1,
-    po_custom_field_2,
-    po_custom_field_3,
+    po_custom_field1,
+    po_custom_field2,
+    po_custom_field3,
   } = programObjectives;
 
   // Check if the program objective already exists
@@ -43,9 +43,9 @@ const createProgramObjective = async (programObjectives) => {
       po_seq_number,
       po_desc,
       po_status,
-      po_custom_field_1,
-      po_custom_field_2,
-      po_custom_field_3,
+      po_custom_field1,
+      po_custom_field2,
+      po_custom_field3,
     ]
   );
 
@@ -61,9 +61,9 @@ const updateProgramObjective = async (
   const {
     po_desc,
     po_status,
-    po_custom_field_1,
-    po_custom_field_2,
-    po_custom_field_3,
+    po_custom_field1,
+    po_custom_field2,
+    po_custom_field3,
   } = updatedFields;
 
   // Check if the program objective exists
@@ -91,17 +91,17 @@ const updateProgramObjective = async (
 
   if (po_custom_field_1) {
     updates.push("PO_CustomField1 = ?");
-    values.push(po_custom_field_1);
+    values.push(po_custom_field1);
   }
 
   if (po_custom_field_2) {
     updates.push("PO_CustomField2 = ?");
-    values.push(po_custom_field_2);
+    values.push(po_custom_field2);
   }
 
   if (po_custom_field_3) {
     updates.push("PO_CustomField3 = ?");
-    values.push(po_custom_field_3);
+    values.push(po_custom_field3);
   }
 
   values.push(programCode, poSeqNumber);
@@ -116,10 +116,10 @@ const updateProgramObjective = async (
 };
 
 // Delete program objective
-const deleteProgramObjective = async (programCode, poSeqNumber) => {
+const deleteProgramObjective = async (program_code, po_seq_number) => {
   const [result] = await pool.query(
     `DELETE FROM ${TableNames.PO_MASTER_DATA_TABLE} WHERE Program_Code = ? AND PO_SeqNumber = ?`,
-    [programCode, poSeqNumber]
+    [program_code, po_seq_number]
   );
 
   if (result.affectedRows === 0) {

@@ -33,9 +33,9 @@ const createProgramEducationalObjectiveController = async (req, res) => {
     peo_seq_number,
     peo_desc,
     peo_status,
-    peo_custom_field_1,
-    peo_custom_field_2,
-    peo_custom_field_3,
+    peo_custom_field1,
+    peo_custom_field2,
+    peo_custom_field3,
   } = req.body;
 
   if (!program_code || !peo_seq_number) {
@@ -62,9 +62,9 @@ const createProgramEducationalObjectiveController = async (req, res) => {
       peo_seq_number,
       peo_desc,
       peo_status,
-      peo_custom_field_1,
-      peo_custom_field_2,
-      peo_custom_field_3,
+      peo_custom_field1,
+      peo_custom_field2,
+      peo_custom_field3,
     });
 
     res.status(201).json({

@@ -7,12 +7,12 @@ import {
 
 // Get PEO-PO mapping by program code, PEO sequence number, and PO sequence number
 const getPeoPoMappingController = async (req, res) => {
-  const { programCode, peoSeqNumber, poSeqNumber } = req.body;
+  const { program_code, peo_seq_number, po_seq_number } = req.body;
   try {
     const data = await checkPeoPoMapping(
-      programCode,
-      peoSeqNumber,
-      poSeqNumber
+      program_code,
+      peo_seq_number,
+      po_seq_number
     );
     if (data) {
       res.status(200).json(data);
@@ -33,9 +33,9 @@ const createPeoPoMappingController = async (req, res) => {
     po_seq_number,
     peo_po_activation_code,
     peo_po_status,
-    peo_po_custom_field_1,
-    peo_po_custom_field_2,
-    peo_po_custom_field_3,
+    peo_po_custom_field1,
+    peo_po_custom_field2,
+    peo_po_custom_field3,
   } = req.body;
 
   if (!program_code || !peo_seq_number || !po_seq_number) {
@@ -64,9 +64,9 @@ const createPeoPoMappingController = async (req, res) => {
       po_seq_number,
       peo_po_activation_code,
       peo_po_status,
-      peo_po_custom_field_1,
-      peo_po_custom_field_2,
-      peo_po_custom_field_3,
+      peo_po_custom_field1,
+      peo_po_custom_field2,
+      peo_po_custom_field3,
     });
 
     res.status(201).json({

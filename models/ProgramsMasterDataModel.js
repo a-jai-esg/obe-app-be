@@ -2,10 +2,10 @@ import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
 // Check if the program exists
-const retrievePrograms = async (programDept) => {
+const retrievePrograms = async (program_dept) => {
   const [rows] = await pool.query(
     `SELECT * FROM ${TableNames.PROGRAMS_MASTER_DATA_TABLE} WHERE Program_Dept = ?`,
-    [programDept]
+    [program_dept]
   );
   return rows;
 };
@@ -49,7 +49,7 @@ const createProgram = async (program) => {
 };
 
 // Update program details
-const updateProgram = async (programCode, updatedFields) => {
+const updateProgram = async (program_code, updatedFields) => {
   const {
     program_title,
     program_dept,
@@ -62,7 +62,7 @@ const updateProgram = async (programCode, updatedFields) => {
   // Check if the program exists
   const [program] = await pool.query(
     `SELECT * FROM ${TableNames.PROGRAMS_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
-    [programCode]
+    [program_code]
   );
   if (!program.length) {
     throw new Error("Program not found");
@@ -86,17 +86,17 @@ const updateProgram = async (programCode, updatedFields) => {
     values.push(program_status);
   }
 
-  if (program_custom_field_1) {
+  if (program_custom_field1) {
     updates.push("Program_CustomField1 = ?");
     values.push(program_custom_field1);
   }
 
-  if (program_custom_field_2) {
+  if (program_custom_field2) {
     updates.push("Program_CustomField2 = ?");
     values.push(program_custom_field2);
   }
 
-  if (program_custom_field_3) {
+  if (program_custom_field3) {
     updates.push("Program_CustomField3 = ?");
     values.push(program_custom_field3);
   }
@@ -114,10 +114,10 @@ const updateProgram = async (programCode, updatedFields) => {
 };
 
 // Delete program
-const deleteProgram = async (programCode) => {
+const deleteProgram = async (program_code) => {
   const [result] = await pool.query(
     `DELETE FROM ${TableNames.PROGRAMS_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
-    [programCode]
+    [program_code]
   );
 
   if (result.affectedRows === 0) {

@@ -61,24 +61,24 @@ const createPoCiloMapping = async (poCiloMapping) => {
 
 // Update PO-CILO mapping details
 const updatePoCiloMapping = async (
-  programCode,
-  ciloSeqNumber,
-  poSeqNumber,
+  program_code,
+  cilo_seq_number,
+  po_seq_number,
   updatedFields
 ) => {
   const {
     po_cilo_activation_code,
     po_cilo_status,
-    po_cilo_custom_field_1,
-    po_cilo_custom_field_2,
-    po_cilo_custom_field_3,
+    po_cilo_custom_field1,
+    po_cilo_custom_field2,
+    po_cilo_custom_field3,
   } = updatedFields;
 
   // Check if the PO-CILO mapping exists
   const existingPoCiloMapping = await checkPoCiloMapping(
-    programCode,
-    ciloSeqNumber,
-    poSeqNumber
+    program_code,
+    cilo_seq_number,
+    po_seq_number
   );
 
   if (!existingPoCiloMapping) {
@@ -98,22 +98,22 @@ const updatePoCiloMapping = async (
     values.push(po_cilo_status);
   }
 
-  if (po_cilo_custom_field_1) {
+  if (po_cilo_custom_field1) {
     updates.push("PO_CILO_CustomField1 = ?");
-    values.push(po_cilo_custom_field_1);
+    values.push(po_cilo_custom_field1);
   }
 
-  if (po_cilo_custom_field_2) {
+  if (po_cilo_custom_field2) {
     updates.push("PO_CILO_CustomField2 = ?");
-    values.push(po_cilo_custom_field_2);
+    values.push(po_cilo_custom_field2);
   }
 
-  if (po_cilo_custom_field_3) {
+  if (po_cilo_custom_field3) {
     updates.push("PO_CILO_CustomField3 = ?");
-    values.push(po_cilo_custom_field_3);
+    values.push(po_cilo_custom_field3);
   }
 
-  values.push(programCode, ciloSeqNumber, poSeqNumber);
+  values.push(program_code, cilo_seq_number, po_seq_number);
 
   const [result] = await pool.query(
     `UPDATE ${TableNames.PO_CILO_MAPPING_MATRIX_TABLE} SET ${updates.join(

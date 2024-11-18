@@ -19,9 +19,9 @@ const createProgramEducationalObjective = async (
     peo_seq_number,
     peo_desc,
     peo_status,
-    peo_custom_field_1,
-    peo_custom_field_2,
-    peo_custom_field_3,
+    peo_custom_field1,
+    peo_custom_field2,
+    peo_custom_field3,
   } = programEducationalObjectives;
 
   // Check if the program objective already exists
@@ -43,9 +43,9 @@ const createProgramEducationalObjective = async (
       peo_seq_number,
       peo_desc,
       peo_status,
-      peo_custom_field_1,
-      peo_custom_field_2,
-      peo_custom_field_3,
+      peo_custom_field1,
+      peo_custom_field2,
+      peo_custom_field3,
     ]
   );
 
@@ -54,21 +54,21 @@ const createProgramEducationalObjective = async (
 
 // Update program objective details
 const updateProgramEducationalObjective = async (
-  programCode,
-  peoSeqNumber,
+  program_code,
+  peo_seq_number,
   updatedFields
 ) => {
   const {
     peo_desc,
     peo_status,
-    peo_custom_field_1,
-    peo_custom_field_2,
-    peo_custom_field_3,
+    peo_custom_field1,
+    peo_custom_field2,
+    peo_custom_field3,
   } = updatedFields;
 
   // Check if the program objective exists
   const existingProgramEducationalObjective =
-    await checkProgramEducationalObjectives(programCode, peoSeqNumber);
+    await checkProgramEducationalObjectives(program_code, peo_seq_number);
 
   if (!existingProgramEducationalObjective) {
     throw new Error("Program educational objective not found");
@@ -89,17 +89,17 @@ const updateProgramEducationalObjective = async (
 
   if (peo_custom_field_1) {
     updates.push("PEO_CustomField1 = ?");
-    values.push(peo_custom_field_1);
+    values.push(peo_custom_field1);
   }
 
   if (peo_custom_field_2) {
     updates.push("PEO_CustomField2 = ?");
-    values.push(peo_custom_field_2);
+    values.push(peo_custom_field2);
   }
 
   if (peo_custom_field_3) {
     updates.push("PEO_CustomField3 = ?");
-    values.push(peo_custom_field_3);
+    values.push(peo_custom_field3);
   }
 
   values.push(programCode, peoSeqNumber);
@@ -114,10 +114,13 @@ const updateProgramEducationalObjective = async (
 };
 
 // Delete program objective
-const deleteProgramEducationalObjective = async (programCode, peoSeqNumber) => {
+const deleteProgramEducationalObjective = async (
+  program_code,
+  peo_seq_number
+) => {
   const [result] = await pool.query(
     `DELETE FROM ${TableNames.PEO_MASTER_DATA_TABLE} WHERE Program_Code = ? AND PEO_SeqNumber = ?`,
-    [programCode, peoSeqNumber]
+    [program_code, peo_seq_number]
   );
 
   if (result.affectedRows === 0) {

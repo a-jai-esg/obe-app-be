@@ -7,12 +7,12 @@ import {
 
 // Get courses CILOs by CILO code and course code
 const getCoursesCilosController = async (req, res) => {
-  const { ciloCode, currCourseCode } = req.params;
+  const { cilo_code, curr_course_code } = req.params;
 
   try {
     const data = await getCoursesCilosByCiloAndCourseCode(
-      ciloCode,
-      currCourseCode
+      cilo_code,
+      curr_course_code
     );
     if (data) {
       res.status(200).json(data);
@@ -66,10 +66,10 @@ const createCoursesCilosController = async (req, res) => {
 
 // Update courses CILOs details
 const updateCoursesCilosController = async (req, res) => {
-  const { ciloCode, currCourseCode } = req.params;
+  const { cilo_code, curr_course_code } = req.params;
   const updatedFields = req.body;
 
-  if (!ciloCode || !currCourseCode) {
+  if (!cilo_code || !curr_course_code) {
     return res.status(400).json({
       message: "CILO code and course code are required",
     });
@@ -77,8 +77,8 @@ const updateCoursesCilosController = async (req, res) => {
 
   try {
     const result = await updateCoursesCilos(
-      ciloCode,
-      currCourseCode,
+      cilo_code,
+      curr_course_code,
       updatedFields
     );
     if (result) {
@@ -93,7 +93,7 @@ const updateCoursesCilosController = async (req, res) => {
 
 // Delete a courses CILOs
 const deleteCoursesCilosController = async (req, res) => {
-  const { ciloCode, currCourseCode } = req.params;
+  const { cilo_code, curr_course_code } = req.params;
 
   if (!ciloCode || !currCourseCode) {
     return res.status(400).json({
@@ -102,7 +102,7 @@ const deleteCoursesCilosController = async (req, res) => {
   }
 
   try {
-    await deleteCoursesCilos(ciloCode, currCourseCode);
+    await deleteCoursesCilos(cilo_code, curr_course_code);
     res.status(200).json({ message: "Courses CILOs deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
