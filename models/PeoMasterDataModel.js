@@ -10,6 +10,27 @@ const getProgramEducationalObjectives = async (programCode) => {
   return rows[0];
 };
 
+const getProgramEducationalObjectives = async (program_code, dept_code) => {
+  let query = `
+    SELECT 
+      pmdt.*
+    FROM ${TableNames.PEO_MASTER_DATA_TABLE} pmdt 
+    LEFT JOIN ${TableNames.PROGRAMS_MASTER_DATA_TABLE} pmd 
+    ON pmdt.Program_Code = pmd.Program_Code
+    WHERE pmd.Program_Dept = ?
+  `;
+
+  const params = [dept_code];
+
+  if (program_code !== null) {
+    query += ` AND pmd.Program_Code LIKE ?`;
+    params.push(`%${program_code}%`);
+  }
+
+  const [rows] = await pool.query(query, params);
+  return rows;
+};
+
 // Create a new program objective
 const createProgramEducationalObjective = async (
   programEducationalObjectives
