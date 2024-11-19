@@ -10,6 +10,27 @@ const checkProgramEducationalObjectives = async (programCode, peoSeqNumber) => {
   return rows[0];
 };
 
+const getProgramEducationalObjectives = async (program_code, dept_code) => {
+  let query = `
+    SELECT 
+      pmdt.*
+    FROM ${TableNames.PEO_MASTER_DATA_TABLE} pmdt 
+    LEFT JOIN ${TableNames.PROGRAMS_MASTER_DATA_TABLE} pmd 
+    ON pmdt.Program_Code = pmd.Program_Code
+    WHERE pmd.Program_Dept = ?
+  `;
+
+  const params = [dept_code];
+
+  if (program_code !== null) {
+    query += ` AND pmd.Program_Code LIKE ?`;
+    params.push(`%${program_code}%`);
+  }
+
+  const [rows] = await pool.query(query, params);
+  return rows;
+};
+
 // Create a new program objective
 const createProgramEducationalObjective = async (
   programEducationalObjectives
@@ -100,22 +121,22 @@ const updateProgramEducationalObjective = async (
     values.push(peo_status);
   }
 
-  if (peo_custom_field_1) {
+  if (peo_custom_field1) {
     updates.push("PEO_CustomField1 = ?");
     values.push(peo_custom_field1);
   }
 
-  if (peo_custom_field_2) {
+  if (peo_custom_field2) {
     updates.push("PEO_CustomField2 = ?");
     values.push(peo_custom_field2);
   }
 
-  if (peo_custom_field_3) {
+  if (peo_custom_field3) {
     updates.push("PEO_CustomField3 = ?");
     values.push(peo_custom_field3);
   }
 
-  values.push(programCode, peoSeqNumber);
+  values.push(program_code, peo_seq_number);
 
   const [result] = await pool.query(
     `UPDATE ${TableNames.PEO_MASTER_DATA_TABLE} SET ${updates.join(", ")} 
@@ -145,6 +166,7 @@ const deleteProgramEducationalObjective = async (
 
 export {
   createProgramEducationalObjective,
+  getProgramEducationalObjectives,
   checkProgramEducationalObjectives,
   updateProgramEducationalObjective,
   deleteProgramEducationalObjective,

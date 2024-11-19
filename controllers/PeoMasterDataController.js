@@ -1,5 +1,6 @@
 import {
   createProgramEducationalObjective,
+  getProgramEducationalObjectives,
   checkProgramEducationalObjectives,
   updateProgramEducationalObjective,
   deleteProgramEducationalObjective,
@@ -7,13 +8,10 @@ import {
 
 // Get program educational objective by program code and PEO sequence number
 const getProgramEducationalObjectiveController = async (req, res) => {
-  const { programCode, peoSeqNumber } = req.params;
+  const { program_code, dept_code } = req.body;
 
   try {
-    const data = await checkProgramEducationalObjectives(
-      programCode,
-      peoSeqNumber
-    );
+    const data = await getProgramEducationalObjectives(program_code, dept_code);
     if (data) {
       res.status(200).json(data);
     } else {
