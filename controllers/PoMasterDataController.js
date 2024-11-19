@@ -1,19 +1,20 @@
 import {
   createProgramObjective,
-  checkProgramObjectives,
+  getProgramObjectives,
   updateProgramObjective,
   deleteProgramObjective,
 } from "../models/PoMasterDataModel.js";
 
-// Get program objective by program code and sequence number
-const getProgramObjectiveController = async (req, res) => {
-  const { program_code, po_seq_number } = req.body;
+// Get program educational objective by program code
+const getProgramObjectivesController = async (req, res) => {
+  const { programCode } = req.body;
+
   try {
-    const data = await checkProgramObjectives(program_code, po_seq_number);
+    const data = await getProgramObjectives(programCode);
     if (data) {
       res.status(200).json(data);
     } else {
-      res.status(404).json({ message: "Program objective not found" });
+      res.status(404).json({ message: "Program objective/s not found" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -105,8 +106,8 @@ const deleteProgramObjectiveController = async (req, res) => {
 };
 
 export {
-  getProgramObjectiveController,
   createProgramObjectiveController,
+  getProgramObjectivesController,
   updateProgramObjectiveController,
   deleteProgramObjectiveController,
 };

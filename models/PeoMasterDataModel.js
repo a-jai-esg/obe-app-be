@@ -2,10 +2,10 @@ import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
 // Check if the program objective exists
-const checkProgramEducationalObjectives = async (programCode, peoSeqNumber) => {
+const getProgramEducationalObjectives = async (programCode) => {
   const [rows] = await pool.query(
-    `SELECT * FROM ${TableNames.PEO_MASTER_DATA_TABLE} WHERE Program_Code = ? AND PEO_SeqNumber = ?`,
-    [programCode, peoSeqNumber]
+    `SELECT * FROM ${TableNames.PEO_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
+    [programCode]
   );
   return rows[0];
 };
@@ -36,14 +36,6 @@ const createProgramEducationalObjective = async (
     2,
     "0"
   )}`;
-
-  // Check if the program objective already exists
-  const existingProgramEducationalObjective =
-    await checkProgramEducationalObjectives(program_code, peo_seq_number);
-
-  if (existingProgramEducationalObjective) {
-    return { message: "Program educational objective already exists" };
-  }
 
   // Create new program objective
   const [result] = await pool.query(
@@ -100,22 +92,22 @@ const updateProgramEducationalObjective = async (
     values.push(peo_status);
   }
 
-  if (peo_custom_field_1) {
+  if (peo_custom_field1) {
     updates.push("PEO_CustomField1 = ?");
     values.push(peo_custom_field1);
   }
 
-  if (peo_custom_field_2) {
+  if (peo_custom_field2) {
     updates.push("PEO_CustomField2 = ?");
     values.push(peo_custom_field2);
   }
 
-  if (peo_custom_field_3) {
+  if (peo_custom_field3) {
     updates.push("PEO_CustomField3 = ?");
     values.push(peo_custom_field3);
   }
 
-  values.push(programCode, peoSeqNumber);
+  values.push(program_code, peo_seq_number);
 
   const [result] = await pool.query(
     `UPDATE ${TableNames.PEO_MASTER_DATA_TABLE} SET ${updates.join(", ")} 
@@ -145,7 +137,7 @@ const deleteProgramEducationalObjective = async (
 
 export {
   createProgramEducationalObjective,
-  checkProgramEducationalObjectives,
+  getProgramEducationalObjectives,
   updateProgramEducationalObjective,
   deleteProgramEducationalObjective,
 };

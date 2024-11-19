@@ -1,25 +1,22 @@
 import {
   createProgramEducationalObjective,
-  checkProgramEducationalObjectives,
+  getProgramEducationalObjectives,
   updateProgramEducationalObjective,
   deleteProgramEducationalObjective,
 } from "../models/PeoMasterDataModel.js";
 
-// Get program educational objective by program code and PEO sequence number
-const getProgramEducationalObjectiveController = async (req, res) => {
-  const { programCode, peoSeqNumber } = req.params;
+// Get program educational objective by program code
+const getProgramEducationalObjectivesController = async (req, res) => {
+  const { programCode } = req.body;
 
   try {
-    const data = await checkProgramEducationalObjectives(
-      programCode,
-      peoSeqNumber
-    );
+    const data = await getProgramEducationalObjectives(programCode);
     if (data) {
       res.status(200).json(data);
     } else {
       res
         .status(404)
-        .json({ message: "Program educational objective not found" });
+        .json({ message: "Program educational objective/s not found" });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -116,7 +113,7 @@ const deleteProgramEducationalObjectiveController = async (req, res) => {
 };
 
 export {
-  getProgramEducationalObjectiveController,
+  getProgramEducationalObjectivesController,
   createProgramEducationalObjectiveController,
   updateProgramEducationalObjectiveController,
   deleteProgramEducationalObjectiveController,

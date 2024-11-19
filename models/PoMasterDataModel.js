@@ -1,11 +1,10 @@
 import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
-// Check if the program objective exists
-const checkProgramObjectives = async (programCode, poSeqNumber) => {
+const getProgramObjectives = async (programCode) => {
   const [rows] = await pool.query(
-    `SELECT * FROM ${TableNames.PO_MASTER_DATA_TABLE} WHERE Program_Code = ? AND PO_SeqNumber = ?`,
-    [programCode, poSeqNumber]
+    `SELECT * FROM ${TableNames.PEO_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
+    [programCode]
   );
   return rows[0];
 };
@@ -34,16 +33,6 @@ const createProgramObjective = async (programObjectives) => {
     2,
     "0"
   )}`;
-
-  // Check if the program objective already exists
-  const existingProgramObjective = await checkProgramObjectives(
-    program_code,
-    po_seq_number
-  );
-
-  if (existingProgramObjective) {
-    return { message: "Program objective already exists" };
-  }
 
   // Create new program objective
   const [result] = await pool.query(
@@ -102,17 +91,17 @@ const updateProgramObjective = async (
     values.push(po_status);
   }
 
-  if (po_custom_field_1) {
+  if (po_custom_field1) {
     updates.push("PO_CustomField1 = ?");
     values.push(po_custom_field1);
   }
 
-  if (po_custom_field_2) {
+  if (po_custom_field2) {
     updates.push("PO_CustomField2 = ?");
     values.push(po_custom_field2);
   }
 
-  if (po_custom_field_3) {
+  if (po_custom_field3) {
     updates.push("PO_CustomField3 = ?");
     values.push(po_custom_field3);
   }
@@ -144,7 +133,7 @@ const deleteProgramObjective = async (program_code, po_seq_number) => {
 
 export {
   createProgramObjective,
-  checkProgramObjectives,
+  getProgramObjectives,
   updateProgramObjective,
   deleteProgramObjective,
 };

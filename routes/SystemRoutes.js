@@ -11,9 +11,9 @@ import {
 
 import {
   createProgramObjectiveController,
-  getProgramObjectiveController,
   updateProgramObjectiveController,
   deleteProgramObjectiveController,
+  getProgramObjectivesController,
 } from "../controllers/PoMasterDataController.js";
 
 import {
@@ -32,7 +32,7 @@ import {
 
 import {
   createProgramEducationalObjectiveController,
-  getProgramEducationalObjectiveController,
+  getProgramEducationalObjectivesController,
   updateProgramEducationalObjectiveController,
   deleteProgramEducationalObjectiveController,
 } from "../controllers/PeoMasterDataController.js";
@@ -90,11 +90,13 @@ systemRoutes.post(
   authenticateJwt,
   createProgramObjectiveController
 );
+
 systemRoutes.post(
   "/po-master/read",
   authenticateJwt,
-  getProgramObjectiveController
+  getProgramObjectivesController
 );
+
 systemRoutes.post(
   "/po-master/update",
   authenticateJwt,
@@ -159,7 +161,7 @@ systemRoutes.post(
 systemRoutes.post(
   "/peo-master/read",
   authenticateJwt,
-  getProgramEducationalObjectiveController
+  getProgramEducationalObjectivesController
 );
 systemRoutes.post(
   "/peo-master/update",
