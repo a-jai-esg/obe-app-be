@@ -7,10 +7,9 @@ import {
 
 // Get program educational objective by program code
 const getProgramEducationalObjectivesController = async (req, res) => {
-  const { programCode } = req.body;
-
+  const { program_code, dept_code } = req.body;
   try {
-    const data = await getProgramEducationalObjectives(programCode);
+    const data = await getProgramEducationalObjectives(program_code, dept_code);
     if (data) {
       res.status(200).json(data);
     } else {

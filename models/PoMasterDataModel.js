@@ -1,14 +1,18 @@
 import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
-const getProgramObjectives = async (programCode) => {
-  const [rows] = await pool.query(
-    `SELECT * FROM ${TableNames.PEO_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
-    [programCode]
-  );
-  return rows[0];
-};
+const getProgramObjectives = async (program_code) => {
+  let query = `SELECT * FROM ${TableNames.PO_MASTER_DATA_TABLE}`;
+  let params = [];
 
+  if (program_code !== null) {
+    query += " WHERE Program_Code = ?";
+    params.push(program_code);
+  }
+
+  const [rows] = await pool.query(query, params);
+  return rows;
+};
 // Create a new program objective
 const createProgramObjective = async (programObjectives) => {
   const {

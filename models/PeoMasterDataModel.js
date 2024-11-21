@@ -1,15 +1,6 @@
 import pool from "../config/database.js";
 import TableNames from "../constants/TableNames.js";
 
-// Check if the program objective exists
-const getProgramEducationalObjectives = async (programCode) => {
-  const [rows] = await pool.query(
-    `SELECT * FROM ${TableNames.PEO_MASTER_DATA_TABLE} WHERE Program_Code = ?`,
-    [programCode]
-  );
-  return rows[0];
-};
-
 const getProgramEducationalObjectives = async (program_code, dept_code) => {
   let query = `
     SELECT 

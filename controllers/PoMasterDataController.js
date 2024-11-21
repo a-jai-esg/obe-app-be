@@ -7,11 +7,12 @@ import {
 
 // Get program educational objective by program code
 const getProgramObjectivesController = async (req, res) => {
-  const { programCode } = req.body;
+  const { program_code } = req.body;
 
   try {
-    const data = await getProgramObjectives(programCode);
+    const data = await getProgramObjectives(program_code);
     if (data) {
+      console.log(data);
       res.status(200).json(data);
     } else {
       res.status(404).json({ message: "Program objective/s not found" });
