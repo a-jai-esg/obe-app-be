@@ -15,7 +15,6 @@ const checkPeoPoMapping = async (programCode, peoSeqNumber, poSeqNumber) => {
 const createPeoPoMapping = async (peoPoMapping) => {
   const {
     program_code,
-    curr_course_code,
     peo_seq_number,
     po_seq_number,
     peo_po_activation_code,
@@ -39,13 +38,12 @@ const createPeoPoMapping = async (peoPoMapping) => {
   // Create new PEO-PO mapping
   const [result] = await pool.query(
     `INSERT INTO ${TableNames.PEO_PO_MAPPING_MATRIX_TABLE} 
-    (Program_Code, Curr_Course_Code, PEO_SeqNumber, PO_SeqNumber,
+    (Program_Code, PEO_SeqNumber, PO_SeqNumber,
     PEO_PO_Activation_Code, PEO_PO_Status, 
     PEO_PO_CustomField1, PEO_PO_CustomField2, PEO_PO_CustomField3)
-    VALUES (?,?,?,?,?,?,?,?,?)`,
+    VALUES (?,?,?,?,?,?,?,?)`,
     [
       program_code,
-      curr_course_code,
       peo_seq_number,
       po_seq_number,
       peo_po_activation_code,

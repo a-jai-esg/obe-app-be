@@ -28,7 +28,6 @@ const getPeoPoMappingController = async (req, res) => {
 const createPeoPoMappingController = async (req, res) => {
   const {
     program_code,
-    curr_course_code,
     peo_seq_number,
     po_seq_number,
     peo_po_activation_code,
@@ -59,7 +58,6 @@ const createPeoPoMappingController = async (req, res) => {
     // Save the PEO-PO mapping to the database
     const newPeoPoMapping = await createPeoPoMapping({
       program_code,
-      curr_course_code,
       peo_seq_number,
       po_seq_number,
       peo_po_activation_code,
@@ -81,6 +79,7 @@ const createPeoPoMappingController = async (req, res) => {
 
 // Update a PEO-PO mapping
 const updatePeoPoMappingController = async (req, res) => {
+  console.log(req.body);
   const { program_code, peo_seq_number, po_seq_number, updatedFields } =
     req.body;
 

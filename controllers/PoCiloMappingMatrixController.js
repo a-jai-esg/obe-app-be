@@ -28,7 +28,6 @@ const getPoCiloMappingController = async (req, res) => {
 const createPoCiloMappingController = async (req, res) => {
   const {
     program_code,
-    curr_course_code,
     cilo_seq_number,
     po_seq_number,
     po_cilo_activation_code,
@@ -61,7 +60,6 @@ const createPoCiloMappingController = async (req, res) => {
     // Save the PO-CILO mapping to the database
     const newPoCiloMapping = await createPoCiloMapping({
       program_code,
-      curr_course_code,
       cilo_seq_number,
       po_seq_number,
       po_cilo_activation_code,
