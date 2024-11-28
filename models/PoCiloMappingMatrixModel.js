@@ -15,6 +15,7 @@ const checkPoCiloMapping = async (programCode, ciloSeqNumber, poSeqNumber) => {
 const createPoCiloMapping = async (poCiloMapping) => {
   const {
     program_code,
+    curr_course_code,
     cilo_seq_number,
     po_seq_number,
     po_cilo_activation_code,
@@ -38,12 +39,13 @@ const createPoCiloMapping = async (poCiloMapping) => {
   // Create new PO-CILO mapping
   const [result] = await pool.query(
     `INSERT INTO ${TableNames.PO_CILO_MAPPING_MATRIX_TABLE} 
-    (Program_Code, CILO_SeqNumber,
+    (Program_Code, Curr_Course_Code, CILO_SeqNumber,
     PO_SeqNumber, PO_CILO_Activation_Code, PO_CILO_Status, 
     PO_CILO_CustomField1, PO_CILO_CustomField2, PO_CILO_CustomField3)
-    VALUES (?,?,?,?,?,?,?,?,?)`,
+    VALUES (?,?,?,?,?,?,?,?,?,?)`,
     [
       program_code,
+      curr_course_code,
       cilo_seq_number,
       po_seq_number,
       po_cilo_activation_code,
@@ -66,6 +68,7 @@ const updatePoCiloMapping = async (
 ) => {
   const {
     po_cilo_activation_code,
+    curr_course_code,
     po_cilo_status,
     po_cilo_custom_field1,
     po_cilo_custom_field2,
@@ -85,6 +88,11 @@ const updatePoCiloMapping = async (
 
   const updates = [];
   const values = [];
+
+  if (curr_course_code) {
+    updates.push("Curr_Course_Code = ?");
+    values.push(curr_course_code);
+  }
 
   if (po_cilo_activation_code) {
     updates.push("PO_CILO_Activation_Code = ?");

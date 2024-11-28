@@ -96,17 +96,17 @@ const updatePeoPoMapping = async (
     values.push(peo_po_status);
   }
 
-  if (peo_po_custom_field_1) {
+  if (peo_po_custom_field1) {
     updates.push("PEO_PO_CustomField1 = ?");
     values.push(peo_po_custom_field1);
   }
 
-  if (peo_po_custom_field_2) {
+  if (peo_po_custom_field2) {
     updates.push("PEO_PO_CustomField2 = ?");
     values.push(peo_po_custom_field2);
   }
 
-  if (peo_po_custom_field_3) {
+  if (peo_po_custom_field3) {
     updates.push("PEO_PO_CustomField3 = ?");
     values.push(peo_po_custom_field3);
   }
