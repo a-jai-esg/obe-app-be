@@ -126,8 +126,9 @@ const loginUserController = async (req, res) => {
     // Set the token in an HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true, // Cookie can't be accessed by JavaScript
-      secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
-      sameSite: "strict", // Prevents CSRF attacks
+      secure: true,
+      // secure: process.env.NODE_ENV === "production", // Set to true if using HTTPS
+      sameSite: "None", // Prevents CSRF attacks
     });
 
     // Return the token in the JSON response for local storage use
@@ -145,8 +146,9 @@ const loginUserController = async (req, res) => {
 const logoutUserController = (req, res) => {
   res.clearCookie("token", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production", // Ensure the cookie is only cleared over HTTPS in production
-    sameSite: "strict", // Optional: Controls when the cookie is sent; can be 'strict', 'lax', or 'none'
+    secure: true,
+    // secure: process.env.NODE_ENV === "production", // Ensure the cookie is only cleared over HTTPS in production
+    sameSite: "None", // Optional: Controls when the cookie is sent; can be 'strict', 'lax', or 'none'
   });
   res.status(200).json({ message: "Logout successful" });
 };

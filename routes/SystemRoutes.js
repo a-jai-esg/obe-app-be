@@ -58,6 +58,14 @@ import {
   deleteCoursesCilosController,
 } from "../controllers/CoursesCilosDataController.js";
 
+import { 
+  getStudentDataController,
+  getProgramsController,
+  getTermsController,
+  getProgramOutComesController,
+  getProgramOutComesCoursesController
+ } from "../controllers/StudentDataController.js";
+
 const systemRoutes = express.Router();
 
 // programs-master-related
@@ -238,6 +246,33 @@ systemRoutes.post(
   "/courses-cilos/delete",
   authenticateJwt,
   deleteCoursesCilosController
+);
+systemRoutes.post(
+  "/students-data/read",
+  authenticateJwt,
+  getStudentDataController
+);
+systemRoutes.post(
+  "/students-data/programs",
+  authenticateJwt,
+  getProgramsController
+);
+systemRoutes.post(
+  "/students-data/terms",
+  authenticateJwt,
+  getTermsController
+);
+
+systemRoutes.post(
+  "/students-data/outcomes",
+  authenticateJwt,
+  getProgramOutComesController
+);
+
+systemRoutes.post(
+  "/students-data/outcomes/courses",
+  authenticateJwt,
+  getProgramOutComesCoursesController
 );
 
 export default systemRoutes;
