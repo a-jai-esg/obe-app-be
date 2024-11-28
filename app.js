@@ -18,8 +18,15 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // The exact origin of your frontend (change this if different)
+    origin: [
+      "http://159.65.131.166:3000",
+      "http://localhost:5173",
+      "https://obe-app-outcome.web.app",
+      "https://obe-app-main.web.app",
+    ], // Array of allowed origins
     credentials: true, // Allow credentials (cookies)
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allow specific HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"], // Allow specific headers
   })
 );
 
