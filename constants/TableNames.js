@@ -9,6 +9,7 @@ class TableNames {
   static PO_MASTER_DATA_TABLE = "PO_Master_Data";
   static PROGRAMS_MASTER_DATA_TABLE = "Programs_Master_Data";
   static USER_TABLE = "User_Data";
+  static STUDENTS_DATA = "Students_Data";
 }
 
 export default TableNames;
