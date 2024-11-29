@@ -2,7 +2,7 @@ import cluster from "cluster";
 import os from "os";
 import app from "./app.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 try {
   if (cluster.isPrimary) {
